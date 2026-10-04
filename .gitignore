@@ -1,0 +1,28 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Variáveis e senhas
+.env
+*.env
+
+# Node / React Native
+node_modules/
+.expo/
+dist/
+
+# Android
+frontend-mobile/android/.gradle/
+frontend-mobile/android/app/build/
+frontend-mobile/android/build/
+
+# IDE
+.idea/
+.vscode/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
