@@ -276,3 +276,33 @@ def search_places(
     )
 
     return results
+
+def get_locations_in_bounds(
+    db: Session,
+    north: float,
+    south: float,
+    east: float,
+    west: float,
+    current_device_id: str
+):
+    five_minutes_ago = datetime.now(timezone.utc) - timedelta(minutes=5)
+    locations = crud.get_locations_since(db, five_minutes_ago)
+    locations = sorted(
+        locations,
+        key=lambda location: location.created_at,
+        reverse=True
+    )
+    visible_locations = []
+    devices_found = set()
+    for location in locations:
+        if location.device_id == current_device_id:
+            continue
+        if location.device_id in devices_found:
+            continue
+        if (
+            south <= location.latitude <= north
+            and west <= location.longitude <= east
+        ):
+            visible_locations.append(location)
+            devices_found.add(location.device_id)
+    return visible_locations

@@ -84,3 +84,21 @@ def search_places(
         latitude,
         longitude
     )
+
+@router.get("/locations-in-bounds", response_model=list[LocationResponse])
+def get_locations_in_bounds(
+    north: float,
+    south: float,
+    east: float,
+    west: float,
+    device_id: str = "emulator-001",
+    db: Session = Depends(get_db)
+):
+    return service.get_locations_in_bounds(
+        db,
+        north,
+        south,
+        east,
+        west,
+        device_id
+    )
